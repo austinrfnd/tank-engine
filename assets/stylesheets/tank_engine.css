@@ -153,6 +153,9 @@ body[orient="landscape"] > .toolbar > h1 {
 }
 
 /************************************************************************************************/
+body ul{
+	padding-left: 0px;
+}
 
 body ul > li {
     position: relative;
