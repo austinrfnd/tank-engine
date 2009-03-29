@@ -93,6 +93,7 @@ module TankEngineHelper
   def append_options(list_content, options = {})
     list_content = options[:top] + list_content if options[:top]
     list_content += list_element(options[:more], :replace) if options[:more]
+    list_content += content_tag(:li, options[:more]) if options[:more] && options[:more].kind_of?(String)    
     list_content += options[:bottom] if options[:bottom]
     list_content
   end
