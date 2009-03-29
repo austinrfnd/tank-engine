@@ -63,10 +63,44 @@ function make_toggles() {
     function() {});
 }
 
+// Let's listen to the click events of all the DOM events we care about
+function init_listiners() {
+	// Let's keep track of all the _replace
+	$("a[target='_replace']").live("click", 
+		function(event){
+			// prevent link from actuall clicking
+			event.preventDefault(); 
+			var link_elememt = $(this);			
+			//Make the link blue			
+			$(link_elememt).attr("selected", "progress");
+
+			$.get($(this).attr('href'), function(data){
+				// Turn off the ajax loading gif
+				$(link_elememt).removeAttr('selected');
+				// Append the data
+				$(link_elememt).parent().parent().append(data);
+				// Remove the the selected
+				$(link_elememt).parent().remove();
+				// Attach the HTML
+				$(link_elememt).parent().html(data);
+			});
+		}
+	);
+}
+
+// Stolen from iui.  We need to pre-load the preloader image
+function preloadImages()
+{
+    var preloader = document.createElement("div");
+    preloader.id = "preloader";
+    document.body.appendChild(preloader);
+}
 
 function init() {
   make_sliders();
   make_toggles();
+	init_listiners();
+	preloadImages();
 }
 
 $(function() {
