@@ -51,7 +51,7 @@ module ActionController
       end
       
       def is_iphone_format?
-        request.format.to_sym == self.class.iphone_request_format
+        request.format && request.format.to_sym == self.class.iphone_request_format
       end
 
       def is_iphone_request?
