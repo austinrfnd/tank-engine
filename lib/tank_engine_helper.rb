@@ -97,7 +97,12 @@ module TankEngineHelper
     list_content += options[:bottom] if options[:bottom]
     list_content
   end
-  
+
+  # <b>Items</b> array of an object that can respond to caption (url text) and target (url)
+  # <b>Options</b> Hash that can include:
+  #               - top - ?
+  #               - more - The more link on the bottom of the list that will replace the link with more list items
+  #               - bottom - ?  
   def te_list(items, options = {})
     slide = !options[:no_slide]
     list_content = items.map {|i| list_element(i, nil, slide)}.join("\n")
