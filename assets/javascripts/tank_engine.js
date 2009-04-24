@@ -2,7 +2,7 @@ function make_sliders() {
   $(".te_slide_left").live("click", function () {
     return slide_left($(this).attr("href"));
   });
-  $(".te_slide_right")live("click", function() {
+  $(".te_slide_right").live("click", function() {
     return slide_right($(this).attr("href"));
   });
 }
