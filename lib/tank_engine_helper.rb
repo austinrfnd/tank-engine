@@ -103,6 +103,7 @@ module TankEngineHelper
   #               - top - ?
   #               - more - The more link on the bottom of the list that will replace the link with more list items
   #               - bottom - ?  
+  #               - as_replace - Boolean to display just the list elements with the surrounding uls
   def te_list(items, options = {})
     slide = !options[:no_slide]
     list_content = items.map {|i| list_element(i, nil, slide)}.join("\n")
