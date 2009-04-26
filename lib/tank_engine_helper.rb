@@ -52,13 +52,7 @@ module TankEngineHelper
   end
   
   def link_from_list(name, options, slide = nil, html_options = {})
-    if slide
-      if html_options[:class]
-        html_options[:class] += " te_slide_left"
-      else
-        html_options[:class] = "te_slide_left"
-      end
-    end
+    html_options = apply_html_side(slide, html_options)
     link_to(name, options, html_options)
   end
   
@@ -89,6 +83,12 @@ module TankEngineHelper
     link = link_from_list(item.caption, item.url, slide)
     content_tag(:li, link)
   end
+
+  # This will create a an <li>URL</li> to be used in a te_list
+  def link_in_list(name, options, html_options = {}, slide = true )
+    html_options = apply_html_side(slide, html_options)    
+    content_tag(:li, link_to(name, options, html_options))
+  end  
   
   def append_options(list_content, options = {})
     list_content = options[:top] + list_content if options[:top]
@@ -98,7 +98,8 @@ module TankEngineHelper
     list_content
   end
 
-  # <b>Items</b> array of an object that can respond to caption (url text) and target (url)
+  # <b>Items</b> array of an object that can respond to caption (url text) and target (url). 
+  #             Can also take an array of link_in_lists (URLs)
   # <b>Options</b> Hash that can include:
   #               - top - ?
   #               - more - The more link on the bottom of the list that will replace the link with more list items
@@ -106,7 +107,13 @@ module TankEngineHelper
   #               - as_replace - Boolean to display just the list elements with the surrounding uls
   def te_list(items, options = {})
     slide = !options[:no_slide]
-    list_content = items.map {|i| list_element(i, nil, slide)}.join("\n")
+    
+    if items && !items.empty? && items.first.kind_of?(String)
+      list_content = items.join("\n") 
+    else
+      list_content = items.map {|i| list_element(i, nil, slide)}.join("\n")
+    end
+    
     list_content = append_options(list_content, options)
     if options[:as_replace] 
       list_content
@@ -169,7 +176,18 @@ module TankEngineHelper
   def register_orientation_change
     javascript_tag('$(function() { $("body").bind("orientationchange", updateOrientation) });')
   end
-  
+
+  private
+  def apply_html_side(slide, html_options)
+    if slide
+      if html_options[:class]
+        html_options[:class] += " te_slide_left"
+      else
+        html_options[:class] = "te_slide_left"
+      end
+    end
+    html_options    
+  end  
 end
 
 ActionView::Base.send(:include, TankEngineHelper)
