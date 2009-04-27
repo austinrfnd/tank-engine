@@ -46,11 +46,18 @@ module TankEngineHelper
     link_to(name, options, html_options)
   end
   
+  # Use this to create a simple link_to that will slide.
+  def te_link_to(name, options, html_options ={}, slide = true)
+    html_options = apply_html_side(slide, html_options)
+    link_to(name, options, html_options)    
+  end  
+  
   def link_to_external(name, options, html_options = {})
     html_options[:target] = "_self"
     link_to(name, options, html_options)
   end
   
+  # TODO: seems similar enough to te_link_to.  Shall we merge?
   def link_from_list(name, options, slide = nil, html_options = {})
     html_options = apply_html_side(slide, html_options)
     link_to(name, options, html_options)
