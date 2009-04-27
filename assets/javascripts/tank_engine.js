@@ -97,6 +97,9 @@ function preloadImages()
 }
 
 function init() {
+	// Hide the address bar
+	// Uncomment on the line below if you don't want to hide the address bar.
+	scrollTo(0, 1);	
   make_sliders();
   make_toggles();
 	init_listiners();
